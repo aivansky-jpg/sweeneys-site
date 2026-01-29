@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { EventsList } from "./components/EventsList";
 
 const BRAND = {
   name: "Sweeney’s",
@@ -12,6 +13,7 @@ const BRAND = {
 const ASSETS = {
   cover: "/cover.png",
   logo: "/logo.png",
+  featuredEvent: "/featured-event.png",
 };
 
 type MenuItem = { name: string; price?: string; note?: string };
@@ -224,11 +226,8 @@ function Nav() {
             <img
               src={ASSETS.logo}
               alt={`${BRAND.name} logo`}
-              className="h-9 w-auto rounded-md"
+              className="h-10 w-auto"
             />
-            <span className="hidden sm:inline text-sm font-semibold tracking-tight text-white/90">
-              {BRAND.name}
-            </span>
           </a>
 
           <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -297,6 +296,19 @@ function Hero() {
           </div>
 
           <div className="md:col-span-5">
+            <a
+              href="#events"
+              className="block overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur"
+              aria-label="View upcoming events"
+            >
+              <img
+                src={ASSETS.featuredEvent}
+                alt="Featured event poster"
+                className="h-auto w-full"
+                loading="lazy"
+              />
+            </a>
+            <div className="h-4" />
             <div className="rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur p-5">
               <div className="text-sm font-semibold text-white">Quick info</div>
               <div className="mt-3 grid grid-cols-1 gap-3 text-sm">
@@ -422,7 +434,7 @@ function Events() {
         </div>
       </div>
       <div className="md:col-span-8">
-        <FacebookEventsEmbed pageUrl={BRAND.facebookPageUrl} />
+        <EventsList pageUrl={BRAND.facebookPageUrl} />
       </div>
     </div>
   );
