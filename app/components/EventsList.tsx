@@ -97,7 +97,7 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
             rel="noreferrer"
             className="group flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition"
           >
-            <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-white/5">
+            <div className="h-40 w-40 shrink-0 overflow-hidden rounded-xl bg-white/5">
               {ev.cover_url ? (
                 <img
                   src={ev.cover_url}
@@ -113,18 +113,6 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
                 <div className="text-white font-semibold leading-tight">{ev.name}</div>
                 <div className="text-xs text-white/60">{formatDateTime(ev.start_time)}</div>
               </div>
-
-              {ev.place?.name ? (
-                <div className="text-xs text-white/60 mt-1">{ev.place.name}</div>
-              ) : null}
-
-              {ev.description ? (
-                <div className="text-sm text-white/70 mt-2">{short(ev.description)}</div>
-              ) : null}
-
-              <div className="text-xs text-brand-200 mt-3 group-hover:text-brand-100">
-                Event details →
-              </div>
             </div>
           </a>
         ))}
@@ -135,9 +123,7 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
   return (
     <div className="space-y-3">
       <div className="text-white/70 text-sm">
-        {hasApi
-          ? "No upcoming events found."
-          : "Events couldn’t be loaded right now. If needed, open Facebook directly."}
+        {hasApi ? "No upcoming events." : "Events are unavailable right now."}
       </div>
       <a
         className="text-sm underline text-white/80 hover:text-white"
@@ -145,7 +131,7 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
         target="_blank"
         rel="noreferrer"
       >
-        Open Facebook Events
+        Open Facebook page
       </a>
     </div>
   );

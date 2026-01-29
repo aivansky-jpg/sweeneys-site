@@ -7,6 +7,7 @@ const BRAND = {
   address: "13639 Philmont Ave, Philadelphia, PA",
   phone: "(215) 677-3177",
   facebookPageUrl: "https://www.facebook.com/sweeneysphilly",
+  instagramUrl: "https://www.instagram.com/sweeneysphilly/",
 };
 
 // Visuals (easy to swap later in /public)
@@ -184,7 +185,7 @@ function Nav() {
             <img
               src={ASSETS.logo}
               alt={`${BRAND.name} logo`}
-              className="h-10 w-auto"
+              className="h-16 w-auto max-w-none"
             />
           </a>
 
@@ -215,11 +216,6 @@ function Nav() {
 function Hero() {
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <img src={ASSETS.cover} alt="Sweeney’s" className="h-[640px] w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#060816]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,180,255,0.25),transparent_55%)]" />
-      </div>
 
       <div className="mx-auto max-w-6xl px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
@@ -276,7 +272,7 @@ function Hero() {
                 </div>
                 <div className="rounded-2xl bg-black/30 p-4 border border-white/10">
                   <div className="font-medium text-white">Events</div>
-                  <div className="text-white/75">Always up to date — pulled from Facebook Events.</div>
+                  <div className="text-white/75">Upcoming shows and events.</div>
                 </div>
                 <div className="rounded-2xl bg-black/30 p-4 border border-white/10">
                   <div className="font-medium text-white">Kitchen</div>
@@ -292,37 +288,80 @@ function Hero() {
 }
 
 function About() {
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BRAND.address)}`;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
       <div className="md:col-span-7">
         <p className="text-white/80 leading-relaxed">
-          Sweeney’s is a local Philly spot built for good nights and familiar faces — the kind of bar where the
-          staff knows your usual, the crowd feels like neighbors, and live music is part of the story.
+          Sweeney’s is a neighborhood rock club — live, loud, and honest. We’re here for real bands, real
+          moments, and the kind of nights you talk about the next day.
         </p>
         <p className="mt-4 text-white/80 leading-relaxed">
-          We host acoustic evenings, ticketed shows, and community hangouts. Come in for a quick drink after
-          work, meet friends for a weekend catch-up, or show up to sing along with a band you love.
+          From acoustic evenings to full-band shows, we keep the focus on good sound, good people, and a room
+          that feels like home — whether you’re stopping in after work or coming out for a ticketed set.
         </p>
+
+        <div className="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+          <div className="relative h-56">
+            <img src={ASSETS.cover} alt="" className="h-full w-full object-cover opacity-70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05080f] via-[#05080f]/40 to-transparent" />
+            <div className="absolute bottom-4 left-5 right-5">
+              <div className="text-sm font-semibold text-white">The room</div>
+              <div className="mt-1 text-sm text-white/75">
+                A true Philly rock room — close, warm, and built for live music.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="md:col-span-5">
+
+      <div className="md:col-span-5 space-y-6">
         <div className="rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur p-5">
           <div className="text-sm font-semibold text-white">Contact</div>
-          <div className="mt-3 text-sm text-white/75">
-            <div className="font-medium text-white">Phone</div>
-            <a className="underline" href={`tel:${BRAND.phone.replace(/[^0-9+]/g, "")}`}>{BRAND.phone}</a>
-          </div>
+
           <div className="mt-3 text-sm text-white/75">
             <div className="font-medium text-white">Address</div>
-            <div>{BRAND.address}</div>
+            <a className="underline" href={mapsUrl} target="_blank" rel="noreferrer">
+              {BRAND.address}
+            </a>
           </div>
-          <div className="mt-5 rounded-2xl bg-black/30 p-4 text-sm text-white/70 border border-white/10">
-            Want directions? Add a Google Maps button any time.
+
+          <div className="mt-3 text-sm text-white/75">
+            <div className="font-medium text-white">Phone</div>
+            <a className="underline" href={`tel:${BRAND.phone.replace(/[^0-9+]/g, "")}`}>
+              {BRAND.phone}
+            </a>
+          </div>
+
+          <div className="mt-3 text-sm text-white/75">
+            <div className="font-medium text-white">Instagram</div>
+            <a className="underline" href={BRAND.instagramUrl} target="_blank" rel="noreferrer">
+              @sweeneysphilly
+            </a>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+          <div className="px-5 pt-5">
+            <div className="text-sm font-semibold text-white">Map</div>
+            <div className="mt-1 text-sm text-white/70">Tap the address for directions.</div>
+          </div>
+          <div className="mt-4 h-64">
+            <iframe
+              title="Sweeney’s map"
+              className="h-full w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(BRAND.address)}&output=embed`}
+            />
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 function MenuCard({ section }: { section: MenuSection }) {
   return (
