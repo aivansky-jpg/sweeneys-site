@@ -77,13 +77,22 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
     return <div className="text-white/70 text-sm">Loading events…</div>;
   }
 
-  if (hasApi && events.length > 0) {
+  const now = Date.now();
+  const upcoming = events
+    .filter((e) => (e.start_time ? new Date(e.start_time).getTime() >= now - 1000 * 60 * 60 * 12 : true))
+    .sort((a, b) => {
+      const ta = a.start_time ? new Date(a.start_time).getTime() : 0;
+      const tb = b.start_time ? new Date(b.start_time).getTime() : 0;
+      return ta - tb;
+    });
+
+  if (hasApi && upcoming.length > 0) {
     return (
       <div className="grid gap-4">
-        {events.map((ev) => (
+        {upcoming.map((ev) => (
           <a
             key={ev.id}
-	            href={`https://www.facebook.com/events/${ev.id}`}
+            href={`https://www.facebook.com/events/${ev.id}`}
             target="_blank"
             rel="noreferrer"
             className="group flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition"
@@ -114,7 +123,7 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
               ) : null}
 
               <div className="text-xs text-brand-200 mt-3 group-hover:text-brand-100">
-                View on Facebook →
+                Event details →
               </div>
             </div>
           </a>
@@ -123,16 +132,12 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
     );
   }
 
-  // Fallback: Facebook Page Plugin (events tab)
-  const src = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
-    pageUrl
-  )}&tabs=events&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId=`;
-
   return (
     <div className="space-y-3">
       <div className="text-white/70 text-sm">
-        Events are hosted on Facebook. If the list doesn’t show in your browser, open the page
-        directly.
+        {hasApi
+          ? "No upcoming events found."
+          : "Events couldn’t be loaded right now. If needed, open Facebook directly."}
       </div>
       <a
         className="text-sm underline text-white/80 hover:text-white"
@@ -142,19 +147,6 @@ export function EventsList({ pageUrl }: { pageUrl: string }) {
       >
         Open Facebook Events
       </a>
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-        <iframe
-          title="Facebook events"
-          src={src}
-          width="100%"
-          height="700"
-          style={{ border: "none", overflow: "hidden" }}
-          scrolling="no"
-          frameBorder="0"
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          allowFullScreen={true}
-        />
-      </div>
     </div>
   );
 }

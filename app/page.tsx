@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { EventsList } from "./components/EventsList";
 
 const BRAND = {
@@ -144,48 +144,6 @@ const MENU: MenuSection[] = [
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
-}
-
-function FacebookEventsEmbed({ pageUrl }: { pageUrl: string }) {
-  const src = useMemo(() => {
-    const params = new URLSearchParams({
-      href: pageUrl,
-      tabs: "events",
-      width: "500",
-      height: "760",
-      small_header: "true",
-      adapt_container_width: "true",
-      hide_cover: "true",
-      show_facepile: "false",
-    });
-    return `https://www.facebook.com/plugins/page.php?${params.toString()}`;
-  }, [pageUrl]);
-
-  return (
-    <div className="w-full overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur">
-      <div className="p-5 border-b border-white/10">
-        <div className="text-base font-semibold text-white">Upcoming events</div>
-        <div className="text-sm text-white/70">
-          This list is pulled from Facebook Events and updates automatically.
-        </div>
-      </div>
-      <div className="w-full bg-black/20">
-        <iframe
-          title="Sweeney’s Facebook Events"
-          src={src}
-          width="100%"
-          height="760"
-          style={{ border: "none", overflow: "hidden" }}
-          scrolling="no"
-          frameBorder={0}
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-        />
-      </div>
-      <div className="p-5 text-xs text-white/60">
-        If the list shows blank, open our Facebook page and check that Events are public.
-      </div>
-    </div>
-  );
 }
 
 function Section({
