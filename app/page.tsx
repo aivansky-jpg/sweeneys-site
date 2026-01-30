@@ -5,6 +5,8 @@ const BRAND = {
   name: "Sweeney’s",
   tagline: "Neighborhood bar • live nights • good people",
   address: "13639 Philmont Ave, Philadelphia, PA",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=13639%20Philmont%20Ave%2C%20Philadelphia%2C%20PA",
   phone: "(215) 677-3177",
   facebookPageUrl: "https://www.facebook.com/sweeneysphilly",
   instagramUrl: "https://www.instagram.com/sweeneysphilly/",
