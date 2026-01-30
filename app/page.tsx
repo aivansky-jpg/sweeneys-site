@@ -14,7 +14,7 @@ const BRAND = {
 const ASSETS = {
   cover: "/cover.png",
   logo: "/logo.png",
-  featuredEvent: "/featured-event.png",
+  aboutImage: "/cover.png",
 };
 
 type MenuItem = { name: string; price?: string; note?: string };
@@ -202,10 +202,13 @@ function Nav() {
           </nav>
 
           <a
-            href={`tel:${BRAND.phone.replace(/[^0-9+]/g, "")}`}
+            href={BRAND.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 transition"
+            title="Open in Google Maps"
           >
-            Call: {BRAND.phone}
+            {BRAND.address}
           </a>
         </div>
       </div>
@@ -219,7 +222,7 @@ function Hero() {
 
       <div className="mx-auto max-w-6xl px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-          <div className="md:col-span-7">
+          <div className="md:col-span-12">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
               <span className="h-2 w-2 rounded-full bg-cyan-300" />
               Philly neighborhood bar
@@ -246,39 +249,6 @@ function Hero() {
             </div>
             <div className="mt-6 text-sm text-white/70">
               <div className="font-medium text-white/90">{BRAND.address}</div>
-            </div>
-          </div>
-
-          <div className="md:col-span-5">
-            <a
-              href="#events"
-              className="block overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur"
-              aria-label="View upcoming events"
-            >
-              <img
-                src={ASSETS.featuredEvent}
-                alt="Featured event poster"
-                className="h-auto w-full"
-                loading="lazy"
-              />
-            </a>
-            <div className="h-4" />
-            <div className="rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur p-5">
-              <div className="text-sm font-semibold text-white">Quick info</div>
-              <div className="mt-3 grid grid-cols-1 gap-3 text-sm">
-                <div className="rounded-2xl bg-black/30 p-4 border border-white/10">
-                  <div className="font-medium text-white">Reservations</div>
-                  <div className="text-white/75">Call {BRAND.phone} (limited tables on event nights).</div>
-                </div>
-                <div className="rounded-2xl bg-black/30 p-4 border border-white/10">
-                  <div className="font-medium text-white">Events</div>
-                  <div className="text-white/75">Upcoming shows and events.</div>
-                </div>
-                <div className="rounded-2xl bg-black/30 p-4 border border-white/10">
-                  <div className="font-medium text-white">Kitchen</div>
-                  <div className="text-white/75">Wings, burgers, tacos, sandwiches, and more.</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -340,6 +310,13 @@ function About() {
               @sweeneysphilly
             </a>
           </div>
+
+          <div className="mt-3 text-sm text-white/75">
+            <div className="font-medium text-white">Facebook</div>
+            <a className="underline" href={BRAND.facebookPageUrl} target="_blank" rel="noreferrer">
+              Sweeney’s Philly Special
+            </a>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
@@ -394,13 +371,6 @@ function MenuCard({ section }: { section: MenuSection }) {
 function Menu() {
   return (
     <div>
-      <div className="mb-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-5 text-sm text-white/75 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-        <div className="font-semibold text-white">Menu</div>
-        <div className="mt-1">
-          Written menu (easy to update). If you change prices/items, just edit <span className="font-medium">app/page.tsx</span>.
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {MENU.map((section) => (
           <MenuCard key={section.title} section={section} />
@@ -416,17 +386,10 @@ function Events() {
       <div className="md:col-span-4">
         <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
           <div className="text-sm font-semibold text-white">Events</div>
-          <p className="mt-2 text-sm text-white/75">
-            We create all events on Facebook. The list here stays current automatically — upcoming at the top,
-            past events drop off.
-          </p>
-          <div className="mt-4 rounded-2xl bg-black/30 p-4 text-sm text-white/70 border border-white/10">
-            If you don’t see an event here, check our Facebook page.
-            <div className="mt-2">
-              <a className="underline" href={BRAND.facebookPageUrl} target="_blank" rel="noreferrer">
-                Open Facebook page
-              </a>
-            </div>
+          <div className="mt-3 rounded-2xl bg-black/30 p-4 text-sm text-white/70 border border-white/10">
+            <a className="underline" href={BRAND.facebookPageUrl} target="_blank" rel="noreferrer">
+              Open Facebook page
+            </a>
           </div>
         </div>
       </div>

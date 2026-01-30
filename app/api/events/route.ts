@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// Always fetch fresh data on the server.
+export const dynamic = "force-dynamic";
+
 // Facebook Graph API fetcher.
 // Configure in Vercel (Project Settings -> Environment Variables):
 //   FACEBOOK_PAGE_ID     - numeric Facebook Page ID
@@ -11,7 +14,7 @@ import { NextResponse } from "next/server";
 // Note: We intentionally paginate to return *all* upcoming events, not just the
 // first page.
 
-export const revalidate = 300; // cache for 5 minutes (ISR-like)
+// (No ISR caching here — tokens/events change and we want the latest.)
 
 export async function GET() {
   const pageId = process.env.FACEBOOK_PAGE_ID ?? process.env.FB_PAGE_ID;
@@ -57,10 +60,7 @@ export async function GET() {
       if (after) url.searchParams.set("after", after);
       url.searchParams.set("access_token", token);
 
-      const res = await fetch(url.toString(), {
-        // Keep data fresh but avoid hammering Facebook.
-        next: { revalidate: 300 },
-      });
+      const res = await fetch(url.toString(), { cache: "no-store" });
 
       if (!res.ok) {
         const text = await res.text();
